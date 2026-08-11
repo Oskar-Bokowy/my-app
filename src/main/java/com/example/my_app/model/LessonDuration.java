@@ -2,8 +2,6 @@ package com.example.my_app.model;
 
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-
 @Getter
 public enum LessonDuration {
     MIN_45(45),
