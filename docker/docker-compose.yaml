@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: my-app-postgres
+    environment:
+      POSTGRES_DB: my-app_service
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_my-app_service:/var/lib/postgresql/data
+    networks:
+      - my-app
+
+volumes:
+  postgres_my-app_service:
+
+networks:
+  my-app:
+    driver: bridge
