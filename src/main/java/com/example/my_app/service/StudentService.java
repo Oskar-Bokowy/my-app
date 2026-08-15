@@ -31,14 +31,18 @@ public class StudentService {
         return studentMapper.toResponse(student);
     }
 
+    protected Student getStudentById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found", HttpStatus.NOT_FOUND));
+    }
+
     public void deleteStudentById(Long id) {
         studentRepository.deleteById(id);
     }
 
     @Transactional
     public StudentResponse updateStudentById(StudentCreateRequest updatedStudent, Long id) {
-        Student existing = studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found",HttpStatus.NOT_FOUND));
+        Student existing = getStudentById(id);
         existing.setName(updatedStudent.name());
         existing.setSurname(updatedStudent.surname());
         existing.setPhoneNr(updatedStudent.phoneNr());

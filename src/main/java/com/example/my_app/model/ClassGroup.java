@@ -3,6 +3,7 @@ package com.example.my_app.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class ClassGroup {
     private Teacher teacher;
 
     @OneToMany(mappedBy = "classGroup")
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "classGroup")
     private Set<Lesson> lessons;

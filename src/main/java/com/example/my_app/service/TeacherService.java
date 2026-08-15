@@ -3,6 +3,7 @@ package com.example.my_app.service;
 import com.example.my_app.dto.request.TeacherCreateRequest;
 import com.example.my_app.dto.response.TeacherResponse;
 import com.example.my_app.exception.exception.StudentNotFoundException;
+import com.example.my_app.exception.exception.TeacherNotFoundException;
 import com.example.my_app.mapper.TeacherMapper;
 import com.example.my_app.model.Teacher;
 import com.example.my_app.repository.TeacherRepository;
@@ -26,8 +27,13 @@ public class TeacherService {
 
     public TeacherResponse findTeacherById(Long id) {
         Teacher response = teacherRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher not found", HttpStatus.NOT_FOUND));
         return teacherMapper.toResponse(response);
+    }
+
+    protected Teacher getTeacherById(Long id) {
+        return teacherRepository.findById(id)
+                .orElseThrow(() -> new TeacherNotFoundException("Teacher not found", HttpStatus.NOT_FOUND));
     }
 
     public void deleteTeacherById(Long id) {
@@ -36,8 +42,7 @@ public class TeacherService {
 
     @Transactional
     public TeacherResponse updatedTeacherById(TeacherCreateRequest updatedTeacher, Long id) {
-        Teacher existing = teacherRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found",HttpStatus.NOT_FOUND));
+        Teacher existing = getTeacherById(id);
         existing.setName(updatedTeacher.name());
         existing.setSurname(updatedTeacher.surname());
         existing.setEmail(updatedTeacher.email());

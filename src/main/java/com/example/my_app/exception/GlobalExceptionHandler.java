@@ -1,5 +1,6 @@
 package com.example.my_app.exception;
 
+
 import com.example.my_app.exception.exception.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -28,4 +29,5 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(error.getHttpStatus()).body(error);
     }
+
 }
