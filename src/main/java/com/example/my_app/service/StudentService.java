@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class StudentService {
-    private StudentRepository studentRepository;
-    private StudentMapper studentMapper;
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
 
     public StudentResponse createStudent(StudentRequest studentRequest) {

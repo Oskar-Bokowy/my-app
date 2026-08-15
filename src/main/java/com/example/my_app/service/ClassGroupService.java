@@ -21,10 +21,10 @@ import java.util.Set;
 @Service
 @AllArgsConstructor
 public class ClassGroupService {
-    private ClassGroupRepository classGroupRepository;
-    private ClassGroupMapper classGroupMapper;
-    private TeacherService teacherService;
-    private StudentService studentService;
+    private final ClassGroupRepository classGroupRepository;
+    private final ClassGroupMapper classGroupMapper;
+    private final TeacherService teacherService;
+    private final StudentService studentService;
 
 
     @Transactional
@@ -60,13 +60,6 @@ public class ClassGroupService {
 
 
     @Transactional
-    public void addTeacherToClassGroup(Long classGroupId, Long teacherId) {
-        Teacher teacher = teacherService.getTeacherById(teacherId);
-        ClassGroup classGroup = getClassGroupById(classGroupId);
-        classGroup.setTeacher(teacher);
-    }
-
-    @Transactional
     public void changeTeacherInClassGroup(Long classGroupId, Long teacherId) {
         ClassGroup classGroup = getClassGroupById(classGroupId);
         Teacher newTeacher = teacherService.getTeacherById(teacherId);
@@ -74,7 +67,9 @@ public class ClassGroupService {
     }
 
     public ClassGroupResponse crateClassGroup(ClassGroupRequest classGroupRequest) {
+        Teacher teacher = teacherService.getTeacherById(classGroupRequest.teacherId());
         ClassGroup classGroup = classGroupMapper.toEntity(classGroupRequest);
+        classGroup.setTeacher(teacher);
         ClassGroup savedClassGroup = classGroupRepository.save(classGroup);
         return classGroupMapper.toResponse(savedClassGroup);
     }

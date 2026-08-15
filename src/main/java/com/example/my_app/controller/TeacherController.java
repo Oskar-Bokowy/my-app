@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/teachers")
 public class TeacherController {
-    private TeacherService teacherService;
+    private final TeacherService teacherService;
 
     @PostMapping
     public ResponseEntity<TeacherResponse> createTeacher(@RequestBody @Valid TeacherRequest teacherRequest) {

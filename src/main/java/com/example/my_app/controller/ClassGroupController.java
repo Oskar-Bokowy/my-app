@@ -14,7 +14,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/classGroups")
 public class ClassGroupController {
-    private ClassGroupService classGroupService;
+    private final ClassGroupService classGroupService;
 
     @PostMapping
     public ResponseEntity<ClassGroupResponse> createClassGroup(@RequestBody @Valid ClassGroupRequest classGroupRequest) {
@@ -34,7 +34,7 @@ public class ClassGroupController {
         return ResponseEntity.status(204).build();
     }
 
-    @PutMapping("/updatedClassGroug/{classGroupId}")
+    @PutMapping("/updatedClassGroup/{classGroupId}")
     public ResponseEntity<ClassGroupResponse> updatedClassGroupById(@RequestBody @Valid ClassGroupRequest updatedClassGroup, @PathVariable Long classGroupId) {
         ClassGroupResponse response = classGroupService.updatedClassGroupById(updatedClassGroup, classGroupId);
         return ResponseEntity.status(200).body(response);
@@ -47,8 +47,8 @@ public class ClassGroupController {
         return ResponseEntity.status(204).build();
     }
 
-    @PatchMapping("/{classGroupId}/addStudents/")
-    public ResponseEntity<Void> addStudentToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
+    @PatchMapping("/{classGroupId}/addStudents")
+    public ResponseEntity<Void> addStudentsToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
         classGroupService.addStudentsToClassGroup(classGroupId, studentIds);
         return ResponseEntity.status(204).build();
     }
@@ -59,15 +59,9 @@ public class ClassGroupController {
         return ResponseEntity.status(204).build();
     }
 
-    @PatchMapping("/{classGroupId}/removeStudents/")
-    public ResponseEntity<Void> removeStudentToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
+    @PatchMapping("/{classGroupId}/removeStudents")
+    public ResponseEntity<Void> removeStudentsToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
         classGroupService.removeStudentsToClassGroup(classGroupId, studentIds);
-        return ResponseEntity.status(204).build();
-    }
-
-    @PatchMapping("/{classGroupId}/addTeacher/{teacherId}")
-    public ResponseEntity<Void> addTeacherToClassGroup(@PathVariable Long classGroupId, @PathVariable Long teacherId) {
-        classGroupService.addTeacherToClassGroup(classGroupId, teacherId);
         return ResponseEntity.status(204).build();
     }
 
