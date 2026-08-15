@@ -1,6 +1,6 @@
 package com.example.my_app.service;
 
-import com.example.my_app.dto.request.StudentCreateRequest;
+import com.example.my_app.dto.request.StudentRequest;
 import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.mapper.StudentMapper;
@@ -18,8 +18,8 @@ public class StudentService {
     private StudentMapper studentMapper;
 
 
-    public StudentResponse createStudent(StudentCreateRequest studentCreateRequest) {
-        Student student = studentMapper.toEntity(studentCreateRequest);
+    public StudentResponse createStudent(StudentRequest studentRequest) {
+        Student student = studentMapper.toEntity(studentRequest);
         Student savedStudent = studentRepository.save(student);
         return studentMapper.toResponse(savedStudent);
     }
@@ -41,7 +41,7 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentResponse updateStudentById(StudentCreateRequest updatedStudent, Long id) {
+    public StudentResponse updateStudentById(StudentRequest updatedStudent, Long id) {
         Student existing = getStudentById(id);
         existing.setName(updatedStudent.name());
         existing.setSurname(updatedStudent.surname());

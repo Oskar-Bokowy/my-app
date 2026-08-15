@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record ClassGroupCreateRequest(
+public record ClassGroupRequest(
         @NotBlank(message = "Name is required")
         String name,
         @NotBlank(message = "Lvl is required")

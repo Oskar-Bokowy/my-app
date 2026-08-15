@@ -7,7 +7,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record LessonCreateRequest(
+public record LessonRequest(
         @NotNull(message = "Start date is required")
         LocalDateTime start,
         @NotNull(message = "Duration is required")

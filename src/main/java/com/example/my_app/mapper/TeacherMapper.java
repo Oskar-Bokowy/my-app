@@ -1,6 +1,6 @@
 package com.example.my_app.mapper;
 
-import com.example.my_app.dto.request.TeacherCreateRequest;
+import com.example.my_app.dto.request.TeacherRequest;
 import com.example.my_app.dto.response.TeacherResponse;
 import com.example.my_app.model.Teacher;
 import org.springframework.stereotype.Component;
@@ -18,12 +18,12 @@ public class TeacherMapper {
                 .build();
     }
 
-    public Teacher toEntity(TeacherCreateRequest teacherCreateRequest) {
+    public Teacher toEntity(TeacherRequest teacherRequest) {
         return Teacher.builder()
-                .name(teacherCreateRequest.name())
-                .surname(teacherCreateRequest.surname())
-                .email(teacherCreateRequest.email())
-                .phoneNr(teacherCreateRequest.phoneNr())
+                .name(teacherRequest.name())
+                .surname(teacherRequest.surname())
+                .email(teacherRequest.email())
+                .phoneNr(teacherRequest.phoneNr())
                 .build();
     }
 }

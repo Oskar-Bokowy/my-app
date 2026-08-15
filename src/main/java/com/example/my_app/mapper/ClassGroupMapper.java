@@ -1,6 +1,6 @@
 package com.example.my_app.mapper;
 
-import com.example.my_app.dto.request.ClassGroupCreateRequest;
+import com.example.my_app.dto.request.ClassGroupRequest;
 import com.example.my_app.dto.response.ClassGroupResponse;
 import com.example.my_app.model.ClassGroup;
 import org.springframework.stereotype.Component;
@@ -17,10 +17,10 @@ public class ClassGroupMapper {
                 .build();
     }
 
-    public ClassGroup toEntity(ClassGroupCreateRequest classGroupCreateRequest) {
+    public ClassGroup toEntity(ClassGroupRequest classGroupRequest) {
         return ClassGroup.builder()
-                .name(classGroupCreateRequest.name())
-                .lvl(classGroupCreateRequest.lvl())
+                .name(classGroupRequest.name())
+                .lvl(classGroupRequest.lvl())
                 .build();
     }
 }

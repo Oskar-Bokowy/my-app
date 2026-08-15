@@ -1,6 +1,6 @@
 package com.example.my_app.service;
 
-import com.example.my_app.dto.request.ClassGroupCreateRequest;
+import com.example.my_app.dto.request.ClassGroupRequest;
 import com.example.my_app.dto.response.ClassGroupResponse;
 import com.example.my_app.exception.exception.ClassGroupNotFoundExceptionException;
 import com.example.my_app.mapper.ClassGroupMapper;
@@ -73,8 +73,8 @@ public class ClassGroupService {
         classGroup.setTeacher(newTeacher);
     }
 
-    public ClassGroupResponse crateClassGroup(ClassGroupCreateRequest classGroupCreateRequest) {
-        ClassGroup classGroup = classGroupMapper.toEntity(classGroupCreateRequest);
+    public ClassGroupResponse crateClassGroup(ClassGroupRequest classGroupRequest) {
+        ClassGroup classGroup = classGroupMapper.toEntity(classGroupRequest);
         ClassGroup savedClassGroup = classGroupRepository.save(classGroup);
         return classGroupMapper.toResponse(savedClassGroup);
     }
@@ -95,7 +95,7 @@ public class ClassGroupService {
     }
 
     @Transactional
-    public ClassGroupResponse updatedClassGroupById(ClassGroupCreateRequest updatedClassGroup, Long id) {
+    public ClassGroupResponse updatedClassGroupById(ClassGroupRequest updatedClassGroup, Long id) {
         ClassGroup existing = classGroupRepository.findById(id)
                 .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class Group not found", HttpStatus.NOT_FOUND));
         existing.setName(updatedClassGroup.name());

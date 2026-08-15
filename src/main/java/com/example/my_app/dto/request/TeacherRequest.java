@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record TeacherCreateRequest (
+public record TeacherRequest(
         @NotBlank(message = "Name is required")
         String name,
         @NotBlank(message = "Surname is required")

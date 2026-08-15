@@ -1,6 +1,6 @@
 package com.example.my_app.mapper;
 
-import com.example.my_app.dto.request.LessonCreateRequest;
+import com.example.my_app.dto.request.LessonRequest;
 import com.example.my_app.dto.response.LessonResponse;
 import com.example.my_app.model.Lesson;
 import org.springframework.stereotype.Component;
@@ -17,10 +17,10 @@ public class LessonMapper {
                 .build();
     }
 
-    public Lesson toEntity(LessonCreateRequest lessonCreateRequest) {
+    public Lesson toEntity(LessonRequest lessonRequest) {
         return Lesson.builder()
-                .start(lessonCreateRequest.start())
-                .lessonDuration(lessonCreateRequest.duration())
+                .start(lessonRequest.start())
+                .lessonDuration(lessonRequest.duration())
                 .build();
     }
 }

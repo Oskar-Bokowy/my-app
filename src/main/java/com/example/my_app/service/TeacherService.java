@@ -1,8 +1,7 @@
 package com.example.my_app.service;
 
-import com.example.my_app.dto.request.TeacherCreateRequest;
+import com.example.my_app.dto.request.TeacherRequest;
 import com.example.my_app.dto.response.TeacherResponse;
-import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.exception.exception.TeacherNotFoundException;
 import com.example.my_app.mapper.TeacherMapper;
 import com.example.my_app.model.Teacher;
@@ -19,8 +18,8 @@ public class TeacherService {
     private TeacherMapper teacherMapper;
 
 
-    public TeacherResponse createTeacher(TeacherCreateRequest teacherCreateRequest) {
-        Teacher teacher = teacherMapper.toEntity(teacherCreateRequest);
+    public TeacherResponse createTeacher(TeacherRequest teacherRequest) {
+        Teacher teacher = teacherMapper.toEntity(teacherRequest);
         Teacher savedTeacher = teacherRepository.save(teacher);
         return teacherMapper.toResponse(savedTeacher);
     }
@@ -41,7 +40,7 @@ public class TeacherService {
     }
 
     @Transactional
-    public TeacherResponse updatedTeacherById(TeacherCreateRequest updatedTeacher, Long id) {
+    public TeacherResponse updatedTeacherById(TeacherRequest updatedTeacher, Long id) {
         Teacher existing = getTeacherById(id);
         existing.setName(updatedTeacher.name());
         existing.setSurname(updatedTeacher.surname());

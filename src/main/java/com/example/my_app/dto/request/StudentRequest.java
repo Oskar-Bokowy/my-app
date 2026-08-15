@@ -8,7 +8,7 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 @Builder
-public record StudentCreateRequest(
+public record StudentRequest(
         @NotBlank(message = "Name is required")
         String name,
         @NotBlank(message = "Surname is required")
