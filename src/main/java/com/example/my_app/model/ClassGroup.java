@@ -16,6 +16,7 @@ import java.util.Set;
 public class ClassGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "class_group_id")
     private Long id;
     private String name;
     private String lvl;

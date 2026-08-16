@@ -2,6 +2,7 @@ package com.example.my_app.service;
 
 import com.example.my_app.dto.request.ClassGroupRequest;
 import com.example.my_app.dto.response.ClassGroupResponse;
+import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.exception.exception.ClassGroupNotFoundExceptionException;
 import com.example.my_app.mapper.ClassGroupMapper;
 import com.example.my_app.model.ClassGroup;
@@ -11,6 +12,8 @@ import com.example.my_app.repository.ClassGroupRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -97,4 +100,6 @@ public class ClassGroupService {
         existing.setLvl(updatedClassGroup.lvl());
         return classGroupMapper.toResponse(existing);
     }
+
+
 }

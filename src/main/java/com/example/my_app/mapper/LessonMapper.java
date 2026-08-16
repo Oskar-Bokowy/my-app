@@ -10,7 +10,7 @@ public class LessonMapper {
 
     public LessonResponse toResponse(Lesson lesson) {
         return LessonResponse.builder()
-                .lessonId(lesson.getId())
+                .lessonId(lesson.getLessonId())
                 .start(lesson.getStart())
                 .duration(lesson.getLessonDuration())
                 .classGroupId(lesson.getClassGroup().getId())

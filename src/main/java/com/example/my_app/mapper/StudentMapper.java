@@ -10,7 +10,7 @@ public class StudentMapper {
 
     public StudentResponse toResponse(Student student){
         return StudentResponse.builder()
-                .studentId(student.getId())
+                .id(student.getId())
                 .name(student.getName())
                 .surname(student.getSurname())
                 .email(student.getEmail())

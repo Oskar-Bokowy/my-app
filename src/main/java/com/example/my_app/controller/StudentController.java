@@ -5,8 +5,13 @@ import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -36,5 +41,17 @@ public class StudentController {
     public ResponseEntity<StudentResponse> updatedStudentById(@RequestBody @Valid StudentRequest updatedStudent, @PathVariable Long studentId) {
         StudentResponse response = studentService.updateStudentById(updatedStudent, studentId);
         return ResponseEntity.status(200).body(response);
+    }
+
+    @GetMapping("/allStudentsFromClassGroup/{classGroupId}")
+    public ResponseEntity<Page<StudentResponse>> allStudentFromClassGroup(@PageableDefault Pageable pageable, @PathVariable Long classGroupId) {
+        Page<StudentResponse> responses = studentService.getStudentFormClassGroup(pageable, classGroupId);
+        return ResponseEntity.status(200).body(responses);
+    }
+
+    @GetMapping("/allStudents")
+    public ResponseEntity<Page<StudentResponse>> getAllStudents(@PageableDefault Pageable pageable) {
+        Page<StudentResponse> responses = studentService.getAllStudents(pageable);
+        return ResponseEntity.status(200).body(responses);
     }
 }

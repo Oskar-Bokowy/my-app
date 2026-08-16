@@ -4,10 +4,14 @@ import com.example.my_app.dto.request.StudentRequest;
 import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.mapper.StudentMapper;
+import com.example.my_app.model.ClassGroup;
 import com.example.my_app.model.Student;
 import com.example.my_app.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +54,14 @@ public class StudentService {
         existing.setDateOfBirth(updatedStudent.dateOfBirth());
         return studentMapper.toResponse(existing);
     }
+
+
+    public Page<StudentResponse> getStudentFormClassGroup(Pageable pageable, Long classGroupId) {
+        return studentRepository.findByClassGroup_Id(classGroupId, pageable);
+    }
+
+    public Page<StudentResponse> getAllStudents(Pageable pageable) {
+        return studentRepository.findAllStudent(pageable);
+    }
+
 }

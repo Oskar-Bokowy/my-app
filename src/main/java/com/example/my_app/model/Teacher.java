@@ -1,8 +1,6 @@
 package com.example.my_app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +15,10 @@ import java.util.Set;
 @SuperBuilder
 @Getter
 @Table(name = "teacher")
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "teacher_id")
+)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Teacher extends Person {
 

@@ -19,7 +19,7 @@ import java.util.Set;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long lessonId;
 
     private LocalDateTime start;
 

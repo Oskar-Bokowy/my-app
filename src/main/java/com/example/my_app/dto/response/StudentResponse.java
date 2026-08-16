@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 @Builder
 public record StudentResponse(
-    Long studentId,
+    Long id,
     String name,
     String surname,
     String email,
