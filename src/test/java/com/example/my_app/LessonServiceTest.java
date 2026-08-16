@@ -21,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -130,55 +131,60 @@ class LessonServiceTest {
         assertEquals(lesson.getLessonDuration(), resultResponse.duration());
     }
 
-//    @Test
-//    void  markAttendance(){
-//        //given
-//        Student student1 = TestFactoryStudent.createTestStudent();
-//        student1.setId(1L);
-//        Student student2 = TestFactoryStudent.createTestStudent();
-//        student2.setId(2L);
-//        ClassGroup classGroup = TestFactoryClassGroup.createTestClassGroup();
-//        classGroup.setId(1L);
-//        Lesson lesson = TestFactoryLesson.createTestLesson();
-//        lesson.setLessonId(1L);
-//
-//
-//        Set<Long> studentIds = Set.of(student1.getId(), student2.getId());
-//        List<Student> students = List.of(student1, student2);
-//        when(studentRepository.findAllById(studentIds)).thenReturn(students);
-//        when(lessonRepository.findById(1L)).thenReturn(Optional.of(lesson));
-//
-//        //when
-//        lessonService.markAttendance(1L,studentIds);
-//
-//        //then
-//        assertThat(lesson.getPresentStudents()).containsExactlyInAnyOrder(student1, student2);
-//    }
+    @Test
+    void  markAttendance(){
+        //given
+        Student student1 = TestFactoryStudent.createTestStudent();
+        student1.setId(1L);
+        Student student2 = TestFactoryStudent.createTestStudent();
+        student2.setId(2L);
+        ClassGroup classGroup = TestFactoryClassGroup.createTestClassGroup();
+        classGroup.setId(1L);
+        classGroup.getStudents().add(student1);
+        classGroup.getStudents().add(student2);
+        student1.setClassGroup(classGroup);
+        student2.setClassGroup(classGroup);
+        Lesson lesson = TestFactoryLesson.createTestLesson();
+        lesson.setLessonId(1L);
+        lesson.setClassGroup(classGroup);
 
-//    @Test
-//    void  markAttendanceThrowStudentNotFound(){
-//        //given
-//        Student student1 = TestFactoryStudent.createTestStudent();
-//        student1.setId(1L);
-//        ClassGroup classGroup = TestFactoryClassGroup.createTestClassGroup();
-//        classGroup.setId(1L);
-//        Lesson lesson = TestFactoryLesson.createTestLesson();
-//        lesson.setLessonId(1L);
-//
-//
-//        Set<Long> studentIds = Set.of(student1.getId(),2L);
-//        List<Student> students = List.of(student1);
-//        when(studentRepository.findAllById(studentIds)).thenReturn(students);
-//        when(lessonRepository.findById(1L)).thenReturn(Optional.of(lesson));
-//
-//        //when
-//        lessonService.markAttendance(1L,studentIds);
-//
-//        //then
-//        assertThrows(StudentNotFoundException.class,
-//                ()->studentRepository.findById(2L));
-//
-//    }
+
+        Set<Long> studentIds = Set.of(student1.getId(), student2.getId());
+        List<Student> students = List.of(student1, student2);
+        when(studentRepository.findByIdInAndClassGroup_Id(studentIds,lesson.getClassGroup().getId())).thenReturn(new HashSet<>(students));
+        when(lessonRepository.findById(1L)).thenReturn(Optional.of(lesson));
+
+        //when
+        lessonService.markAttendance(1L,studentIds);
+
+        //then
+        assertThat(lesson.getPresentStudents()).containsExactlyInAnyOrder(student1, student2);
+    }
+
+    @Test
+    void markAttendanceThrowStudentNotFound() {
+        // given
+        Student student1 = TestFactoryStudent.createTestStudent();
+        student1.setId(1L);
+
+        ClassGroup classGroup = TestFactoryClassGroup.createTestClassGroup();
+        classGroup.setId(1L);
+
+        Lesson lesson = TestFactoryLesson.createTestLesson();
+        lesson.setLessonId(1L);
+        lesson.setClassGroup(classGroup);
+
+        Set<Long> studentIds = Set.of(1L, 2L);
+        List<Student> students = List.of(student1);
+
+        when(studentRepository.findByIdInAndClassGroup_Id(studentIds, lesson.getClassGroup().getId())).thenReturn(new HashSet<>(students));
+        when(lessonRepository.findById(1L)).thenReturn(Optional.of(lesson));
+
+        // when & then
+        assertThrows(IllegalArgumentException.class,
+                () -> lessonService.markAttendance(1L, studentIds)
+        );
+    }
 
     @Test
     void shouldThrowLessonNotFound(){
