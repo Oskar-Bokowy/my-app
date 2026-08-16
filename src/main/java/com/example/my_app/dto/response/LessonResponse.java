@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Builder
 public record LessonResponse (
         Long lessonId,
+        String lessonTopic,
         LocalDateTime start,
         LessonDuration duration,
         Long classGroupId

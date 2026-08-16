@@ -30,5 +30,5 @@ public class ClassGroup {
     private Set<Student> students = new HashSet<>();
 
     @OneToMany(mappedBy = "classGroup")
-    private Set<Lesson> lessons;
+    private Set<Lesson> lessons = new HashSet<>();
 }

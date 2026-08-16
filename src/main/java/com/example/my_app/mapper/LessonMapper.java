@@ -11,6 +11,7 @@ public class LessonMapper {
     public LessonResponse toResponse(Lesson lesson) {
         return LessonResponse.builder()
                 .lessonId(lesson.getLessonId())
+                .lessonTopic(lesson.getLessonTopic())
                 .start(lesson.getStart())
                 .duration(lesson.getLessonDuration())
                 .classGroupId(lesson.getClassGroup().getId())
@@ -19,6 +20,7 @@ public class LessonMapper {
 
     public Lesson toEntity(LessonRequest lessonRequest) {
         return Lesson.builder()
+                .lessonTopic(lessonRequest.lessonTopic())
                 .start(lessonRequest.start())
                 .lessonDuration(lessonRequest.duration())
                 .build();

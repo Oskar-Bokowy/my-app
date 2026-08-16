@@ -34,6 +34,7 @@ CREATE TABLE lesson
 (
     lesson_id       BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     lesson_duration INTEGER,
+    lesson_topic VARCHAR(25),
     start           TIMESTAMP,
     class_group     BIGINT
 );

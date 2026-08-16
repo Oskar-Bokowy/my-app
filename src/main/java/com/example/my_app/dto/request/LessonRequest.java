@@ -1,6 +1,7 @@
 package com.example.my_app.dto.request;
 
 import com.example.my_app.model.LessonDuration;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -12,6 +13,8 @@ public record LessonRequest(
         LocalDateTime start,
         @NotNull(message = "Duration is required")
         LessonDuration duration,
+        @NotBlank(message = "Lesson topic is required")
+        String lessonTopic,
         @NotNull(message = "Class group is required")
         Long classGroupId
 ) {
