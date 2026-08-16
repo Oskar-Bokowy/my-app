@@ -30,7 +30,7 @@ public class TeacherService {
         return teacherMapper.toResponse(response);
     }
 
-    protected Teacher getTeacherById(Long id) {
+    public Teacher getTeacherById(Long id) {
         return teacherRepository.findById(id)
                 .orElseThrow(() -> new TeacherNotFoundException("Teacher not found", HttpStatus.NOT_FOUND));
     }
@@ -45,7 +45,7 @@ public class TeacherService {
         existing.setName(updatedTeacher.name());
         existing.setSurname(updatedTeacher.surname());
         existing.setEmail(updatedTeacher.email());
-        existing.setPhoneNr(updatedTeacher.email());
+        existing.setPhoneNr(updatedTeacher.phoneNr());
         return teacherMapper.toResponse(existing);
     }
 }

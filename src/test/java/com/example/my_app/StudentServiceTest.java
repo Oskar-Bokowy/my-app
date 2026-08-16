@@ -2,6 +2,7 @@ package com.example.my_app;
 
 import com.example.my_app.dto.request.StudentRequest;
 import com.example.my_app.dto.response.StudentResponse;
+import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.mapper.StudentMapper;
 import com.example.my_app.model.Student;
 import com.example.my_app.repository.StudentRepository;
@@ -15,12 +16,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
- class StudentServiceTest {
+class StudentServiceTest {
 
     @Mock
     private StudentRepository studentRepository;
@@ -79,7 +79,7 @@ import static org.mockito.Mockito.*;
 
 
     @Test
-    void shouldDeleteStudent(){
+    void shouldDeleteStudent() {
         //given
         Student student = TestFactoryStudent.createTestStudent();
         student.setId(1L);
@@ -88,24 +88,24 @@ import static org.mockito.Mockito.*;
         studentService.deleteStudentById(1L);
 
         //then
-        verify(studentRepository,times(1)).deleteById(1L);
+        verify(studentRepository, times(1)).deleteById(1L);
         verifyNoMoreInteractions(studentRepository);
     }
 
     @Test
-    void shouldUpdatedStudentById(){
+    void shouldUpdatedStudentById() {
         //given
         Student student = TestFactoryStudent.createTestStudent();
         student.setId(1L);
         StudentResponse response = StudentResponse.builder()
-                .name("Daniel")
+                .name("Oskar")
                 .surname("Jak")
                 .email("JaO2@gmai.com")
                 .phoneNr("656858989")
                 .dateOfBirth(LocalDate.parse("2012-05-15"))
                 .build();
         StudentRequest request = StudentRequest.builder()
-                .name("Daniel")
+                .name("Oskar")
                 .surname("Jak")
                 .email("JaO2@gmai.com")
                 .phoneNr("656858989")
@@ -116,7 +116,7 @@ import static org.mockito.Mockito.*;
         when(studentMapper.toResponse(student)).thenReturn(response);
 
         //when
-        StudentResponse studentResult = studentService.updateStudentById(request,1L);
+        StudentResponse studentResult = studentService.updateStudentById(request, 1L);
 
         //then
         assertNotNull(studentResult);
@@ -126,4 +126,17 @@ import static org.mockito.Mockito.*;
         assertEquals(student.getPhoneNr(), studentResult.phoneNr());
         assertEquals(student.getDateOfBirth(), studentResult.dateOfBirth());
     }
+
+    @Test
+    void shouldThrowStudentNotFound() {
+        //given
+        Long id = 1L;
+
+        when(studentRepository.findById(id)).thenReturn(Optional.empty());
+
+        //when & then
+        assertThrows(StudentNotFoundException.class,
+                () -> studentService.findStudentById(id));
+    }
+
 }

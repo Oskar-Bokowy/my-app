@@ -83,7 +83,7 @@ public class ClassGroupService {
         return classGroupMapper.toResponse(classGroup);
     }
 
-    protected ClassGroup getClassGroupById(Long id) {
+    public ClassGroup getClassGroupById(Long id) {
         return classGroupRepository.findById(id)
                 .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class Group not found", HttpStatus.NOT_FOUND));
     }

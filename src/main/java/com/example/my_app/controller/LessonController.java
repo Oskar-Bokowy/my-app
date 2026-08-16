@@ -41,7 +41,7 @@ public class LessonController {
     }
 
     @PatchMapping("/markAttendance/{lessonId}")
-    public ResponseEntity<Void> markAttendance(@PathVariable Long lessonId, @RequestBody Set<Long> studentIds) {
+    public ResponseEntity<Void> markAttendance(@PathVariable Long lessonId, @RequestBody Set<Long> studentIds)  {
         lessonService.markAttendance(lessonId, studentIds);
         return ResponseEntity.status(204).build();
     }

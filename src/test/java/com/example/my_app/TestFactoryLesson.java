@@ -6,6 +6,7 @@ import com.example.my_app.model.Lesson;
 import com.example.my_app.model.LessonDuration;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 
 public class TestFactoryLesson {
 
@@ -14,6 +15,7 @@ public class TestFactoryLesson {
                 .lessonTopic("Zad 1")
                 .start(LocalDateTime.parse("2025-10-06T10:00:00"))
                 .lessonDuration(LessonDuration.MIN_45)
+                .presentStudents(new HashSet<>())
                 .build();
     }
 
@@ -25,11 +27,12 @@ public class TestFactoryLesson {
                 .build();
     }
 
-    protected static LessonRequest createTestLessonRequest(){
+    protected static LessonRequest createTestLessonRequest(Long classGroupId){
         return LessonRequest.builder()
                 .lessonTopic("Zad 1")
                 .duration(LessonDuration.MIN_45)
                 .start(LocalDateTime.parse("2025-10-06T10:00:00"))
+                .classGroupId(classGroupId)
                 .build();
     }
 }

@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -56,9 +55,13 @@ public class LessonService {
         return lessonMapper.toResponse(existing);
     }
 
-    public void markAttendance(Long lessonId, Set<Long> studentsIds) {
+    public void markAttendance(Long lessonId, Set<Long> studentsIds)  {
         Lesson lesson = findLessonById(lessonId);
-        List<Student> students = studentRepository.findAllById(studentsIds);
+        Long classGroupId = lesson.getClassGroup().getId();
+        Set<Student> students =  studentRepository.findByIdInAndClassGroup_Id(studentsIds,classGroupId);
+        if (students.size() != studentsIds.size()) {
+            throw new IllegalArgumentException("Student not allowed");
+        }
         lesson.getPresentStudents().addAll(students);
         lessonRepository.save(lesson);
     }

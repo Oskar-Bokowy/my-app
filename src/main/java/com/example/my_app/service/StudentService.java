@@ -4,12 +4,10 @@ import com.example.my_app.dto.request.StudentRequest;
 import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.mapper.StudentMapper;
-import com.example.my_app.model.ClassGroup;
 import com.example.my_app.model.Student;
 import com.example.my_app.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -35,7 +33,7 @@ public class StudentService {
         return studentMapper.toResponse(student);
     }
 
-    protected Student getStudentById(Long id) {
+    public Student getStudentById(Long id) {
         return studentRepository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student not found", HttpStatus.NOT_FOUND));
     }
