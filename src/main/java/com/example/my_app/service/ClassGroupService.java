@@ -83,13 +83,13 @@ public class ClassGroupService {
 
     public ClassGroupResponse findClassGroupById(Long id) {
         ClassGroup classGroup = classGroupRepository.findById(id)
-                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class Group not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class group not found", HttpStatus.NOT_FOUND));
         return classGroupMapper.toResponse(classGroup);
     }
 
     public ClassGroup getClassGroupById(Long id) {
         return classGroupRepository.findById(id)
-                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class Group not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class group not found", HttpStatus.NOT_FOUND));
     }
 
     public void deleteClassGroupById(Long id) {
@@ -99,7 +99,7 @@ public class ClassGroupService {
     @Transactional
     public ClassGroupResponse updatedClassGroupById(ClassGroupRequest updatedClassGroup, Long id) {
         ClassGroup existing = classGroupRepository.findById(id)
-                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class Group not found", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ClassGroupNotFoundExceptionException("Class group not found", HttpStatus.NOT_FOUND));
         existing.setName(updatedClassGroup.name());
         existing.setLvl(updatedClassGroup.lvl());
         return classGroupMapper.toResponse(existing);
