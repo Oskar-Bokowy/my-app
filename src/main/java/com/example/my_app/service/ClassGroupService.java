@@ -2,8 +2,9 @@ package com.example.my_app.service;
 
 import com.example.my_app.dto.request.ClassGroupRequest;
 import com.example.my_app.dto.response.ClassGroupResponse;
-import com.example.my_app.dto.response.StudentResponse;
 import com.example.my_app.exception.exception.ClassGroupNotFoundExceptionException;
+import com.example.my_app.exception.exception.StudentAlreadyAssignedToClassGroupException;
+import com.example.my_app.exception.exception.StudentNotFoundException;
 import com.example.my_app.mapper.ClassGroupMapper;
 import com.example.my_app.model.ClassGroup;
 import com.example.my_app.model.Student;
@@ -12,8 +13,6 @@ import com.example.my_app.repository.ClassGroupRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.query.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +33,15 @@ public class ClassGroupService {
     public void removeStudentToClassGroup(Long classGroupId, Long studentId) {
         ClassGroup classGroup = getClassGroupById(classGroupId);
         Student student = studentService.getStudentById(studentId);
-
+        if (!classGroup.getStudents().contains(student)) {
+            throw new StudentNotFoundException("Student not found in class group", HttpStatus.NOT_FOUND);
+        }
         classGroup.getStudents().remove(student);
         student.setClassGroup(null);
     }
 
     @Transactional
-    public void removeStudentsToClassGroup(Long classGroupId, Set<Long> studentIds) {
+    public void removeStudentsFromClassGroup(Long classGroupId, Set<Long> studentIds) {
         studentIds.forEach(studentId -> removeStudentToClassGroup(classGroupId, studentId));
     }
 
@@ -48,6 +49,9 @@ public class ClassGroupService {
     public void addStudentToClassGroup(Long classGroupId, Long studentId) {
         ClassGroup classGroup = getClassGroupById(classGroupId);
         Student student = studentService.getStudentById(studentId);
+        if (student.getClassGroup() != null) {
+            throw new StudentAlreadyAssignedToClassGroupException("Student already assigned to class group", HttpStatus.CONFLICT);
+        }
         if (classGroup.getStudents().size() >= 8) {
             log.warn("ClassGroup {} already has 8 students", classGroupId);
         }

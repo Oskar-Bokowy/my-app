@@ -44,32 +44,32 @@ public class ClassGroupController {
     @PatchMapping("/{classGroupId}/addStudent/{studentId}")
     public ResponseEntity<Void> addStudentToClassGroup(@PathVariable Long classGroupId, @PathVariable Long studentId) {
         classGroupService.addStudentToClassGroup(classGroupId, studentId);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/{classGroupId}/addStudents")
     public ResponseEntity<Void> addStudentsToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
         classGroupService.addStudentsToClassGroup(classGroupId, studentIds);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/{classGroupId}/removeStudent/{studentId}")
     public ResponseEntity<Void> removeStudentToClassGroup(@PathVariable Long classGroupId, @PathVariable Long studentId) {
         classGroupService.removeStudentToClassGroup(classGroupId, studentId);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(200).build();
     }
 
     @PatchMapping("/{classGroupId}/removeStudents")
     public ResponseEntity<Void> removeStudentsToClassGroup(@PathVariable Long classGroupId, @RequestBody Set<Long> studentIds) {
-        classGroupService.removeStudentsToClassGroup(classGroupId, studentIds);
-        return ResponseEntity.status(204).build();
+        classGroupService.removeStudentsFromClassGroup(classGroupId, studentIds);
+        return ResponseEntity.status(200).build();
     }
 
 
     @PatchMapping("/{classGroupId}/changeTeacher/{teacherId}")
     public ResponseEntity<Void> changeTeacherToClassGroup(@PathVariable Long classGroupId, @PathVariable Long teacherId) {
         classGroupService.changeTeacherInClassGroup(classGroupId, teacherId);
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(200).build();
     }
 
 }

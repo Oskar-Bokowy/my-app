@@ -9,7 +9,6 @@ import com.example.my_app.model.ClassGroup;
 import com.example.my_app.model.Student;
 import com.example.my_app.model.Teacher;
 import com.example.my_app.repository.ClassGroupRepository;
-import com.example.my_app.repository.StudentRepository;
 import com.example.my_app.service.ClassGroupService;
 import com.example.my_app.service.StudentService;
 import com.example.my_app.service.TeacherService;
@@ -214,7 +213,7 @@ class ClassGroupServiceTest {
 
         Set<Long> studentIds = Set.of(student1.getId(), student2.getId());
         // when
-        classGroupService.removeStudentsToClassGroup(1L, studentIds);
+        classGroupService.removeStudentsFromClassGroup(1L, studentIds);
 
         // then
         assertThat(student1.getClassGroup()).isNull();
